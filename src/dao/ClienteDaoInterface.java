@@ -6,6 +6,7 @@
 package dao;
 
 import entities.Cliente;
+import java.util.List;
 
 /**
  *
@@ -13,9 +14,10 @@ import entities.Cliente;
  */
 public interface ClienteDaoInterface {
     
+   
     void inserir(Cliente c);
-    void buscar(Cliente c);
-    void buscarPorId(Integer id);
+    List<Cliente> buscar();
+    Cliente buscarPorId(String cpf);
     void remover(Integer id);
     void editar(Cliente c);
 }

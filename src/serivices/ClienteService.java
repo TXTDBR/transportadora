@@ -12,4 +12,9 @@ public class ClienteService {
     public void Inserir(Cliente c){
         dao.inserir(c);
     }
+    
+    public Cliente buscarPorId(String cpf){
+        return dao.buscarPorId(cpf);
+    }
+            
 }
