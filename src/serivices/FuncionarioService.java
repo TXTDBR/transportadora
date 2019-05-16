@@ -1,16 +1,17 @@
 
 package serivices;
 
-import dao.ClienteDao;
 import dao.DaoFactory;
+import dao.FuncionarioDao;
 import entities.Cliente;
+import entities.Funcionario;
 import java.util.List;
 
-public class ClienteService {
+public class FuncionarioService {
     
-    private final ClienteDao dao = DaoFactory.ClienteDaoJDBC();
+    private final FuncionarioDao dao = DaoFactory.FuncionarioDaoJDBC();
     
-    public void InserirOuAtualizar(Cliente c){
+    public void InserirOuAtualizar(Funcionario c){
         if(c.getId() == null){
            dao.inserir(c); 
         }else{
@@ -19,7 +20,7 @@ public class ClienteService {
         
     }
     
-    public Cliente buscarPorId(String cpf){
+    public Funcionario buscarPorId(String cpf){
         return dao.buscarPorId(cpf);
     }
     
@@ -27,7 +28,7 @@ public class ClienteService {
         dao.remover(id);
     }  
 
-    public List<Cliente> listarPorNome(String nome){
+    public List<Funcionario> listarPorNome(String nome){
         return dao.buscarPorNome(nome);
     }
 }

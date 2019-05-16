@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+ 
 package dao;
-
+ 
 import db.DB;
 import db.DbException;
-import entities.Cliente;
+import entities.Funcionario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,24 +11,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author 169121742018.2
- */
-public class ClienteDao implements ClienteDaoInterface {
+public class FuncionarioDao implements FuncionarioDaoInterface{
 
     private Connection con = null;
-
-    public ClienteDao(Connection con) {
-
+    public FuncionarioDao(Connection con){
         this.con = con;
-
     }
-
     @Override
-    public void inserir(Cliente c) {
+    public void inserir(Funcionario c) {
         PreparedStatement st = null;
-        String sql = "Insert into cliente (nome, cpf, telefone, email) values (?,?,?,?)";
+        String sql = "Insert into funcionario (nome, cpf, telefone, email) values (?,?,?,?)";
 
         try {
             st = con.prepareStatement(sql);
@@ -40,6 +28,7 @@ public class ClienteDao implements ClienteDaoInterface {
             st.setString(2, c.getCpf());
             st.setString(3, c.getTelefone());
             st.setString(4, c.getEmail());
+            //st.setInt(5, c.getDepartamentoId());
             st.executeUpdate();
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
@@ -49,36 +38,8 @@ public class ClienteDao implements ClienteDaoInterface {
     }
 
     @Override
-    public List<Cliente> buscarPorNome(String nome) {
-        String sql = "select * from cliente where nome like ?";
-        PreparedStatement st = null;
-        ResultSet rs = null;
-        try {
-            st = con.prepareStatement(sql);
-            st.setString(1, nome + "%");
-            rs = st.executeQuery();
-            List<Cliente> list = new ArrayList<>();
-
-            while (rs.next()) {
-                Cliente c = new Cliente();
-                c.setId(rs.getInt("id"));
-                c.setNome(rs.getString("nome"));
-                c.setCpf(rs.getString("cpf"));
-                c.setTelefone(rs.getString("telefone"));
-                c.setEmail(rs.getString("email"));
-                list.add(c);
-            }
-            return list;
-        } catch (SQLException e) {
-            throw new DbException(e.getMessage());
-        }finally {
-            DB.closeStatement(st);
-        }
-    }
-
-    @Override
-    public Cliente buscarPorId(String cpf) {
-        String sql = "select * from cliente where cpf = ?";
+    public Funcionario buscarPorId(String cpf) {
+         String sql = "select * from funcionario where cpf = ?";
         PreparedStatement st = null;
         ResultSet rs = null;
         try {
@@ -86,12 +47,13 @@ public class ClienteDao implements ClienteDaoInterface {
             st.setString(1, cpf);
             rs = st.executeQuery();
             if (rs.next()) {
-                Cliente c = new Cliente();
+                Funcionario c = new Funcionario();
                 c.setId(rs.getInt("id"));
                 c.setNome(rs.getString("nome"));
                 c.setCpf(rs.getString("cpf"));
                 c.setTelefone(rs.getString("telefone"));
                 c.setEmail(rs.getString("email"));
+               // c.setDepartamento(rs.getInt("departamentoId"));
                 return c;
             } else {
                 return null;
@@ -105,8 +67,37 @@ public class ClienteDao implements ClienteDaoInterface {
     }
 
     @Override
+    public List<Funcionario> buscarPorNome(String nome) {
+        String sql = "select * from funcionario where nome like ?";
+        PreparedStatement st = null;
+        ResultSet rs = null;
+        try {
+            st = con.prepareStatement(sql);
+            st.setString(1, nome + "%");
+            rs = st.executeQuery();
+            List<Funcionario> list = new ArrayList<>();
+
+            while (rs.next()) {
+                Funcionario c = new Funcionario();
+                c.setId(rs.getInt("id"));
+                c.setNome(rs.getString("nome"));
+                c.setCpf(rs.getString("cpf"));
+                c.setTelefone(rs.getString("telefone"));
+                c.setEmail(rs.getString("email"));
+               // c.setDepartamento(rs.getInt("departamentoId"));
+                list.add(c);
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        }finally {
+            DB.closeStatement(st);
+        }
+    }
+
+    @Override
     public void remover(Integer id) {
-        String sql = "delete from cliente where id = ?";
+        String sql = "delete from funcionario where id = ?";
         PreparedStatement st = null;
         try {
             st = con.prepareStatement(sql);
@@ -121,8 +112,8 @@ public class ClienteDao implements ClienteDaoInterface {
     }
 
     @Override
-    public void editar(Cliente c) {
-        String sql = "update set cliente nome=?, cpf=?, telefone=?, email=? where id=?";
+    public void editar(Funcionario c) {
+        String sql = "update funcionario set nome=?, cpf=?, telefone=?, email=? where id=?";
         PreparedStatement st = null;
         try {
             st = con.prepareStatement(sql);
@@ -130,6 +121,7 @@ public class ClienteDao implements ClienteDaoInterface {
             st.setString(2, c.getCpf());
             st.setString(3, c.getTelefone());
             st.setString(4, c.getEmail());
+            //st.setInt(5, c.getDepartamentoId());
             st.setInt(5, c.getId());
             st.executeUpdate();
         } catch (SQLException e) {
@@ -139,4 +131,16 @@ public class ClienteDao implements ClienteDaoInterface {
         }
     }
 
+    @Override
+    public Funcionario getNomePorId(Integer id) {
+    return null;
+    }
+
+    @Override
+    public Funcionario getIdPorNome(String nome) {
+        return null;
+    }
+    
+    
+    
 }

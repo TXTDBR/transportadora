@@ -9,4 +9,8 @@ public class DaoFactory {
         return new ClienteDao(DB.getConnection());
     }
     
+    public static FuncionarioDao FuncionarioDaoJDBC(){
+        return new FuncionarioDao(DB.getConnection());
+    }
+    
 }

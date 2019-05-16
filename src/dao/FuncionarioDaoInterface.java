@@ -6,18 +6,21 @@
 package dao;
 
 import entities.Cliente;
+import entities.Funcionario;
 import java.util.List;
 
 /**
  *
  * @author 169121742018.2
  */
-public interface ClienteDaoInterface {
+public interface FuncionarioDaoInterface {
     
    
-    void inserir(Cliente c);
-    Cliente buscarPorId(String cpf);
-    List<Cliente> buscarPorNome(String nome);
+    void inserir(Funcionario c);
+    Funcionario buscarPorId(String cpf);
+    List<Funcionario> buscarPorNome(String nome);
     void remover(Integer id);
-    void editar(Cliente c);
+    void editar(Funcionario c);
+    Funcionario getNomePorId(Integer id);
+    Funcionario getIdPorNome(String nome);
 }
