@@ -16,5 +16,9 @@ public class ClienteService {
     public Cliente buscarPorId(String cpf){
         return dao.buscarPorId(cpf);
     }
+    
+    public void remover(Integer id){
+        dao.remover(id);
+    }
             
 }

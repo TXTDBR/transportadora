@@ -73,7 +73,7 @@ public class ClienteDao implements ClienteDaoInterface {
 
     @Override
     public Cliente buscarPorId(String cpf) {
-        String sql = "select * from cliente where id = ?";
+        String sql = "select * from cliente where cpf = ?";
         PreparedStatement st = null;
         ResultSet rs = null;
         try{
