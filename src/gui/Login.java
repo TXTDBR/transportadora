@@ -6,6 +6,12 @@
 
 package gui;
 
+import entities.Usuario;
+import java.awt.TrayIcon;
+import javax.swing.JOptionPane;
+import serivices.UsuarioService;
+import sun.print.resources.serviceui;
+
 /**
  *
  * @author User
@@ -16,6 +22,7 @@ public class Login extends javax.swing.JDialog {
     public Login(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
     }
 
     /** This method is called from within the constructor to
@@ -122,10 +129,21 @@ public class Login extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEntrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarActionPerformed
-         TelaPrincipal tp = new TelaPrincipal();
+         Usuario user;
+        user = new Usuario(null,null ,txtUsuario.getText().toLowerCase().trim() , txtSenha.getText().toString());
+         System.out.println(user.getSenha());
+         user = service.logar(user);
          
-         tp.setVisible(true);
-         dispose();
+         if(user == null){
+           JOptionPane.showMessageDialog(this, "Usuario ou Senha inválido(s)!");
+         }else{
+          TelaPrincipal tp = new TelaPrincipal();         
+          tp.setUsuario(user);
+          dispose();
+          tp.setVisible(true);
+            
+         }
+        
     }//GEN-LAST:event_btnEntrarActionPerformed
 
     /**
@@ -180,5 +198,5 @@ public class Login extends javax.swing.JDialog {
     private javax.swing.JPasswordField txtSenha;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
-
+    UsuarioService service = new UsuarioService();
 }

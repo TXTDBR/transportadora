@@ -5,6 +5,7 @@
  */
 package gui;
 
+import entities.Usuario;
 import javax.swing.JOptionPane;
 import serivices.ClienteService;
 import serivices.FuncionarioService;
@@ -32,6 +33,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblNome = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
@@ -49,9 +52,26 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setTitle("Sistema de controle - Tela Inicial");
         setPreferredSize(new java.awt.Dimension(915, 350));
         setResizable(false);
+        getContentPane().setLayout(null);
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(952, 390, 0, 0);
+
+        jLabel3.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Usuário:");
+        getContentPane().add(jLabel3);
+        jLabel3.setBounds(830, 10, 56, 20);
+
+        lblNome.setFont(new java.awt.Font("Comic Sans MS", 1, 14)); // NOI18N
+        lblNome.setForeground(new java.awt.Color(153, 153, 153));
+        lblNome.setText("Jonathan");
+        getContentPane().add(lblNome);
+        lblNome.setBounds(830, 30, 70, 20);
 
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui.imagens/trans.png"))); // NOI18N
+        getContentPane().add(jLabel2);
+        jLabel2.setBounds(0, 0, 915, 350);
 
         jMenu1.setText("Cadastrar");
 
@@ -115,26 +135,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(952, 952, 952)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addGap(12, 12, 12)
-                .addComponent(jLabel1))
-        );
 
         setSize(new java.awt.Dimension(914, 405));
         setLocationRelativeTo(null);
@@ -214,6 +214,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -225,5 +226,12 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JLabel lblNome;
     // End of variables declaration//GEN-END:variables
+    private Usuario user;
+    
+    public void setUsuario(Usuario user){
+        this.user = user;
+        lblNome.setText(user.getNome());
+    }
 }
