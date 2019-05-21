@@ -122,7 +122,7 @@ public class ClienteDao implements ClienteDaoInterface {
 
     @Override
     public void editar(Cliente c) {
-        String sql = "update set cliente nome=?, cpf=?, telefone=?, email=? where id=?";
+        String sql = "update  cliente set nome=?, cpf=?, telefone=?, email=? where id=?";
         PreparedStatement st = null;
         try {
             st = con.prepareStatement(sql);

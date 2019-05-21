@@ -134,16 +134,17 @@ public class FuncionarioFormi extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtTelefone, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBuscar))
                             .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 253, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtnome, javax.swing.GroupLayout.PREFERRED_SIZE, 320, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(btnSalvar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnBuscar))))
+                                .addComponent(jButton3))))
                     .addComponent(jButton7))
                 .addGap(35, 35, 35))
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -169,7 +170,9 @@ public class FuncionarioFormi extends javax.swing.JDialog {
                             .addComponent(txtnome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscar)))
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -182,9 +185,8 @@ public class FuncionarioFormi extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnSalvar)
-                    .addComponent(jButton3)
-                    .addComponent(btnBuscar))
-                .addContainerGap(33, Short.MAX_VALUE))
+                    .addComponent(jButton3))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -222,62 +224,37 @@ public class FuncionarioFormi extends javax.swing.JDialog {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         int sair = JOptionPane.showConfirmDialog(this, "Deseja remover esse registro?", "Atenção", JOptionPane.YES_NO_OPTION);
-        if (sair == JOptionPane.YES_OPTION) {
+        if (sair == JOptionPane.YES_OPTION && !txtId.getText().equalsIgnoreCase("")) {
             service.remover(Utils.tryParseToInt(txtId.getText()));
             limparDados();
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
-
         entities = getFuncionario();
-        service.InserirOuAtualizar(entities);
-        JOptionPane.showMessageDialog(this, "Salvo com sucesso!");
-        limparDados();
+        if (entities.getNome().length() < 3) {
+            JOptionPane.showMessageDialog(this, "Campo obrigatório!");
+            txtnome.requestFocus();
+        } else if (entities.getCpf().length() < 10) {
+            JOptionPane.showMessageDialog(this, "Campo obrigatório!");
+            txtCpf.requestFocus();
+        } else if (entities.getTelefone().length() < 8) {
+            JOptionPane.showMessageDialog(this, "Campo obrigatório!");
+            txtTelefone.requestFocus();
+        } else if (entities.getEmail().length() < 5) {
+            JOptionPane.showMessageDialog(this, "Campo obrigatório!");
+            txtEmail.requestFocus();
+        } else {
+            
+            service.InserirOuAtualizar(entities);
+            JOptionPane.showMessageDialog(this, "Salvo com sucesso!");
+            limparDados();
+        }
     }//GEN-LAST:event_btnSalvarActionPerformed
 
     /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * @param args the command line arguments
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioFormi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioFormi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioFormi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FuncionarioFormi.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                FuncionarioFormi dialog = new FuncionarioFormi(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnSalvar;
@@ -299,9 +276,10 @@ public class FuncionarioFormi extends javax.swing.JDialog {
     private Funcionario entities;
     private FuncionarioService service;
 
-    public void setService(FuncionarioService service){
+    public void setService(FuncionarioService service) {
         this.service = service;
     }
+
     private void limparDados() {
         txtId.setText("");
         txtnome.setText("");
@@ -311,7 +289,7 @@ public class FuncionarioFormi extends javax.swing.JDialog {
         //comboDep.setSelectedIndex(0);
         txtnome.requestFocus();
     }
-    
+
     public Funcionario getFuncionario() {
         Integer id = Utils.tryParseToInt(txtId.getText());
         String nome = txtnome.getText();
@@ -319,7 +297,7 @@ public class FuncionarioFormi extends javax.swing.JDialog {
         String telefone = txtTelefone.getText();
         String email = txtEmail.getText();
         //String dep = comboDep.getSelectedItem().toString();
-        Funcionario c = new Funcionario(id, nome, cpf, telefone, email,0);
+        Funcionario c = new Funcionario(id, nome, cpf, telefone, email, 0);
         return c;
     }
 
@@ -329,10 +307,10 @@ public class FuncionarioFormi extends javax.swing.JDialog {
         txtCpf.setText(c.getCpf());
         txtTelefone.setText(c.getTelefone());
         txtEmail.setText(c.getEmail());
-       // comboDep.setSelectedItem(c.getDepartamentoId());
+        // comboDep.setSelectedItem(c.getDepartamentoId());
 
     }
-    
+
 //    private void mostrarDepartamento(){
 //        comboDep.addItem("Não informado");
 //    }
